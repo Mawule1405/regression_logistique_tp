@@ -2,6 +2,7 @@ import customtkinter as ctk
 import joblib  # Pour charger le modèle pré-sauvegardé
 from Training import Training
 from tkinter import messagebox
+import constant as ct
 
 def predict(frame_c: ctk.CTkFrame, screen_width,screen_height ):
     # Supprimer les widgets existants dans le frame
@@ -10,58 +11,58 @@ def predict(frame_c: ctk.CTkFrame, screen_width,screen_height ):
 
     
     ctk.CTkLabel(frame_c, text="Test de vulnérabilité d'un système informatique",
-                 font=("Times", 16, "bold")).place(x=5, y=10)
+                 font=ct.FONTB).place(x=5, y=10)
     frame = ctk.CTkFrame(frame_c, width=frame_c.winfo_width() - 20, height=500, fg_color="#fff", bg_color="#fff")
     frame.place(x=10, y=50)
 
     # Ajouter des labels et des combobox
-    label1 = ctk.CTkLabel(frame, text="Version du système d'exploitation")
+    label1 = ctk.CTkLabel(frame, text="Version du système d'exploitation",font=ct.FONTS)
     label1.place(x=10, y=10)
-    combo1 = ctk.CTkComboBox(frame, values=["obsolète", "récente"], width=300)
+    combo1 = ctk.CTkComboBox(frame, values=["obsolète", "récente"], width=300, font=ct.FONTS)
     combo1.place(x=350, y=10)
 
-    label2 = ctk.CTkLabel(frame, text="Nombre de ports ouverts")
+    label2 = ctk.CTkLabel(frame, text="Nombre de ports ouverts", font=ct.FONTS)
     label2.place(x=10, y=40)
-    entry2 = ctk.CTkEntry(frame, placeholder_text="0", width=300)
+    entry2 = ctk.CTkEntry(frame, placeholder_text="0", width=300, font=ct.FONTS)
     entry2.place(x=350, y=40)
 
-    label3 = ctk.CTkLabel(frame, text="Fréquence des mises à jour logicielles")
+    label3 = ctk.CTkLabel(frame, text="Fréquence des mises à jour logicielles", font=ct.FONTS)
     label3.place(x=10, y=70)
-    combo3 = ctk.CTkComboBox(frame, values=["régulière", "irrégulière"], width=300)
+    combo3 = ctk.CTkComboBox(frame, values=["régulière", "irrégulière"], width=300, font=ct.FONTS)
     combo3.place(x=350, y=70)
 
-    label4 = ctk.CTkLabel(frame, text="Type d'antivirus utilisé")
+    label4 = ctk.CTkLabel(frame, text="Type d'antivirus utilisé", font=ct.FONTS)
     label4.place(x=10, y=100)
-    combo4 = ctk.CTkComboBox(frame, values=["robuste", "basique"], width=300)
+    combo4 = ctk.CTkComboBox(frame, values=["robuste", "basique"], width=300, font=ct.FONTS)
     combo4.place(x=350, y=100)
 
-    label5 = ctk.CTkLabel(frame, text="Présence de pare-feu actif")
+    label5 = ctk.CTkLabel(frame, text="Présence de pare-feu actif", font=ct.FONTS)
     label5.place(x=10, y=130)
-    combo5 = ctk.CTkComboBox(frame, values=["oui", "non"], width=300)
+    combo5 = ctk.CTkComboBox(frame, values=["oui", "non"], width=300, font=ct.FONTS)
     combo5.place(x=350, y=130)
 
-    label6 = ctk.CTkLabel(frame, text="Nombre d'utilisateurs ayant des privilèges administratifs")
+    label6 = ctk.CTkLabel(frame, text="Nombre d'utilisateurs ayant des privilèges administratifs", font=ct.FONTS)
     label6.place(x=10, y=160)
-    entry6 = ctk.CTkEntry(frame, placeholder_text="0", width=300)
+    entry6 = ctk.CTkEntry(frame, placeholder_text="0", width=300, font=ct.FONTS)
     entry6.place(x=350, y=160)
 
-    label7 = ctk.CTkLabel(frame, text="Historique des attaques précédentes")
+    label7 = ctk.CTkLabel(frame, text="Historique des attaques précédentes", font=ct.FONTS)
     label7.place(x=10, y=190)
-    combo7 = ctk.CTkComboBox(frame, values=["aucune", "faible", "élevée"], width=300)
+    combo7 = ctk.CTkComboBox(frame, values=["aucune", "faible", "élevée"], width=300, font=ct.FONTS)
     combo7.place(x=350, y=190)
 
     # Ajouter des labels et des champs de saisie
-    label8 = ctk.CTkLabel(frame, text="Complexité des mots de passe")
+    label8 = ctk.CTkLabel(frame, text="Complexité des mots de passe", font=ct.FONTS)
     label8.place(x=10, y=230)
-    combo8 = ctk.CTkComboBox(frame, values=["faible", "élevée"], width=300)
+    combo8 = ctk.CTkComboBox(frame, values=["faible", "élevée"], width=300, font=ct.FONTS)
     combo8.place(x=350, y=230)
 
-    entry_label9 = ctk.CTkLabel(frame, text="Nombre de vulnérabilités connues non corrigées")
+    entry_label9 = ctk.CTkLabel(frame, text="Nombre de vulnérabilités connues non corrigées", font=ct.FONTS)
     entry_label9.place(x=10, y=260)
-    entry9 = ctk.CTkEntry(frame, placeholder_text="0", width=300)
+    entry9 = ctk.CTkEntry(frame, placeholder_text="0", width=300, font=ct.FONTS)
     entry9.place(x=350, y=260)
     
-    result_label = ctk.CTkLabel(frame, text="" , font=("Times", 40 , "bold"))
+    result_label = ctk.CTkLabel(frame, text="" , font=ct.FONTH)
     result_label.place(x=10, y=320)
 
     def execute_prediction():

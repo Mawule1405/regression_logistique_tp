@@ -5,6 +5,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import Training as tr
 import json
 
+import constant as ct
+
 def train_model(frame: ctk.CTkFrame):
     # Supprimer les widgets existants dans le frame
     for widget in frame.winfo_children():
@@ -12,50 +14,53 @@ def train_model(frame: ctk.CTkFrame):
         
     
 
-    charging_file_button = ctk.CTkButton(frame, text="Charger le fichier des données",fg_color="#000", width=200, command=lambda: load_file())
+    charging_file_button = ctk.CTkButton(frame, text="Charger le fichier des données",font=ct.FONTN, fg_color="#000", width=300, command=lambda: load_file())
     charging_file_button.place(x=5, y=5)
 
-    start_training_button = ctk.CTkButton(frame, text="Effectuez l'entraînement",fg_color="#000", width=200, command=lambda: start_training())
+    start_training_button = ctk.CTkButton(frame, text="Effectuez l'entraînement",font=ct.FONTN,fg_color="#000", width=200, command=lambda: start_training())
     start_training_button.place(x=5, y=35)
     
-    previous_training_button = ctk.CTkButton(frame, text="Résultat de l'entrainement précédent",fg_color="#000", width=200, command=lambda: previous_training_result())
+    previous_training_button = ctk.CTkButton(frame, text="Résultat de l'entrainement précédent",font=ct.FONTN,fg_color="#000", width=200, command=lambda: previous_training_result())
     previous_training_button.place(x=210, y=35)
 
     # Matrice de confusion avec les champs
     matrix_de_confusion = ctk.CTkFrame(frame, fg_color="#fff", width=200)
     matrix_de_confusion.place(x=5, y=70)
 
-    ctk.CTkLabel(matrix_de_confusion, text="Matrice de confusion", font=("Times", 20, "bold"), anchor="w").place(x=5, y=5)
-    vn_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=("Times", 20, "bold"), anchor="w")
+    ctk.CTkLabel(matrix_de_confusion, text="Matrice de confusion", font=ct.FONTN, anchor="w").place(x=5, y=5)
+    vn_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=ct.FONTB, anchor="w")
     vn_label.place(x=10, y=30)
 
-    fp_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=("Times", 20, "bold"), anchor="w")
-    fp_label.place(x=80, y=30)
+    fn_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=ct.FONTB, anchor="w")
+    fn_label.place(x=80, y=30)
 
-    fn_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=("Times", 20, "bold"), anchor="w")
-    fn_label.place(x=10, y=60)
+    fp_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=ct.FONTB, anchor="w")
+    fp_label.place(x=10, y=60)
 
-    vp_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=("Times", 20, "bold"), anchor="w")
+    vp_label = ctk.CTkLabel(matrix_de_confusion, text="0", font=ct.FONTB, anchor="w")
     vp_label.place(x=80, y=60)
 
     
     rapport_de_classification = ctk.CTkFrame(frame, width = frame.winfo_width()-100, fg_color="#fff", height=frame.winfo_height()-200)
     rapport_de_classification.place(x=210, y=70)
 
-    ctk.CTkLabel(rapport_de_classification, text="Rapport de classification", font=("Times", 20, "bold")).place(x=5, y=5)
+    ctk.CTkLabel(rapport_de_classification, text="Rapport de classification", font=ct.FONTB).place(x=5, y=5)
 
     # Créer un TreeView pour afficher le rapport de classification
-    tree = ttk.Treeview(rapport_de_classification, height=5, columns=("entity", "precision", "recall", "f1-score", "support"), show="headings")
+    style = ttk.Style()
+    style.configure("Treeview", font=ct.FONTN, rowheight=ct.ROW_HEIGHT) 
+    tree = ttk.Treeview(rapport_de_classification,style="Treeview", height=5, columns=("entity", "precision", "recall", "f1-score", "support"), show="headings")
     tree.heading("entity", text="Entité")
     tree.heading("precision", text="Précision")
     tree.heading("recall", text="Rappel")
     tree.heading("f1-score", text="F1-Score")
     tree.heading("support", text="Support")
+    
     tree.place(x=5, y=40)
 
     # Label du path
-    file_path_label = ctk.CTkLabel(frame, text="Aucun fichier chargé", width=600, text_color="#000", anchor="w")
-    file_path_label.place(x=215, y=5)
+    file_path_label = ctk.CTkLabel(frame, text="Aucun fichier chargé",font=ct.FONTN, width=600, text_color="#000", anchor="w")
+    file_path_label.place(x=315, y=5)
 
     # Fonction pour charger le fichier Excel
     def load_file():
@@ -102,7 +107,7 @@ def train_model(frame: ctk.CTkFrame):
         classification_report = results.get("classification_report", {})
         for key, value in classification_report.items():
             if isinstance(value, dict):
-                tree.insert("", "end", values=(f"Classe {key}", round(value["precision"],5), round(value["recall"],5), round(value["f1-score"]), round(value["support"], 5)))
+                tree.insert("", "end", values=(f"Classe {key}", round(value["precision"],5), round(value["recall"],5), round(value["f1-score"], 5), round(value["support"], 5)))
             else:
                 tree.insert("", "end", values=(key, value, "", "", ""))
                 
@@ -171,7 +176,7 @@ def train_model(frame: ctk.CTkFrame):
         # Afficher le graphique dans le canvas Tkinter
         canvas = FigureCanvasTkAgg(fig, master=frame)
         canvas.draw()
-        canvas.get_tk_widget().place(x=5, y=200, width= frame.winfo_width() - 200, height=375)
+        canvas.get_tk_widget().place(x=5, y=280, width= frame.winfo_width() - 300, height=300)
 
 
         

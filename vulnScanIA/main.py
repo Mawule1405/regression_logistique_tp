@@ -2,6 +2,7 @@ import customtkinter as ctk
 import entrainment as ent
 import prediction as pr
 import goout as gt
+import constant as ct
 
 
 ctk.set_appearance_mode("white")
@@ -23,13 +24,13 @@ screen = ctk.CTkFrame(windows, width=screen_width-220,fg_color="#fff", bg_color=
 screen.place(x=210, y=5)
 
 # Ajouter des boutons à l'aside
-train_button = ctk.CTkButton(aside, text="Entraînement",fg_color="#000", width=175, command=lambda: ent.train_model(screen))
+train_button = ctk.CTkButton(aside, text="Entraînement",fg_color="#000",font=ct.FONTN, width=175, command=lambda: ent.train_model(screen))
 train_button.pack(pady=5, padx=5)
 
-predict_button = ctk.CTkButton(aside, text="Prédiction",fg_color="#000", width=175, command=lambda: pr.predict(screen, screen_height, screen_height))
+predict_button = ctk.CTkButton(aside, text="Prédiction",fg_color="#000", font=ct.FONTN, width=175, command=lambda: pr.predict(screen, screen_height, screen_height))
 predict_button.pack(pady=5, padx=5)
 
-out_button = ctk.CTkButton(aside, text="Quitter",fg_color="#000", width=175, command=lambda: gt.goout(windows))
+out_button = ctk.CTkButton(aside, text="Quitter",fg_color="#000",font=ct.FONTN, width=175, command=lambda: gt.goout(windows))
 out_button.pack(pady=5, padx=5)
 
 
